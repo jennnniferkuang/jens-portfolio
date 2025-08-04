@@ -37,13 +37,13 @@ export default function HorizontalScrollGallery() {
             <div ref={triggerRef}>
                 <div className='scroll-section-inner' ref={sectionRef}>
                     <div className='scroll-section'>
-                        <h3>Section 1</h3>
+                        <img className="h-full w-full" src="/background.jpg"></img>
                     </div>
                     <div className='scroll-section'>
-                        <h3>Section 2</h3>
+                        <img className="h-full w-full" src="/background.jpg"></img>
                     </div>
                     <div className='scroll-section'>
-                        <h3>Section 3</h3>
+                        <img className="h-full w-full" src="/background.jpg"></img>
                     </div>
                 </div>
             </div>

@@ -4,11 +4,11 @@ import Link from 'next/link';
 
 export default function Navbar() {
   return (
-    <nav className='w-full p-4 flex justify-between bg-black text-white'>
+    <nav className='navbar fixed'>
       <p>JENNIFER KUANG</p>
       <div className='flex flex-row gap-4'>
-        <Link href='/'>Home</Link>
-        <Link href='/commissions'>Commissions</Link>
+        <Link className='navbar-text' href='/'>Home</Link>
+        <Link className='navbar-text' href='/commissions'>Commissions</Link>
       </div>
     </nav>
   );
