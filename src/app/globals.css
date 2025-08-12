@@ -25,6 +25,7 @@ header {
   align-items: center !important; /* align-middle in Tailwind is align-items: center */
   background: white;
   color: black;
+  padding: 24px;
 }
 
 .navbar {

@@ -1,15 +1,15 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Forum, Almendra } from "next/font/google";
 import "./globals.css";
 import Navbar from '@/components/navbar';
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const body = Forum({
+  weight: '400',
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const title = Almendra({
+  weight: '700',
   subsets: ["latin"],
 });
 
@@ -28,7 +28,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+      <body className={`${body.className} antialiased`}>
         <Navbar/>
         {children}
       </body>
