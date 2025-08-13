@@ -48,7 +48,7 @@ export default function HorizontalScrollGallery() {
                 sprite.style.transform = 'scaleX(-1)';
             }
 
-            if (Math.abs(delta) > 1) {
+            if (Math.abs(delta) > 2) {
                 startWalking();
                 clearTimeout((handleScroll as any).timeout);
                 (handleScroll as any).timeout = setTimeout(stopWalking, 200);
