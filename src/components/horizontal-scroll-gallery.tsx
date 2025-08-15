@@ -3,8 +3,11 @@
 import React, { useRef, useEffect } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
+import { useMediaQuery } from 'react-responsive';
 
 export default function HorizontalScrollGallery() {
+
+    const isMobile = useMediaQuery({ maxWidth: 767 });
 
     const sectionRef = useRef<HTMLDivElement | null>(null);
     const triggerRef = useRef<HTMLDivElement | null>(null);
@@ -111,17 +114,20 @@ export default function HorizontalScrollGallery() {
                             GET RID OF MAGIC NUMBERS (just a proof of concept rn)
                             mobile view PLEASE
                         */}
+                        {!isMobile ? (
+                            <img
+                                src="/me.png"
+                                className="absolute left-42 z-5 w-36"
+                                style={{ bottom: '66vh' }}
+                            />
+                        ) : (
+                            <div></div>
+                        )}
                         <img
                             src="/frame1x1-white.webp"
                             className="absolute left-30 z-5 w-60"
                             style={{ bottom: '60vh' }}
                         />
-                        <img
-                            src="/me.png"
-                            className="absolute left-42 z-5 w-36"
-                            style={{ bottom: '66vh' }}
-                        />
-
                         <img
                             src="/frame2x3-white.webp"
                             className="absolute left-120 z-5 w-60"
