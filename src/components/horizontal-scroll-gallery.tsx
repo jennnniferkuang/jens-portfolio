@@ -39,6 +39,8 @@ export default function HorizontalScrollGallery() {
         clearInterval(interval);
         };
 
+        let scrollTimeout: NodeJS.Timeout | null = null;
+
         const handleScroll = () => {
             const delta = window.scrollY - lastScrollY;
 
@@ -52,8 +54,8 @@ export default function HorizontalScrollGallery() {
 
             if (Math.abs(delta) > 2) {
                 startWalking();
-                clearTimeout((handleScroll as any).timeout);
-                (handleScroll as any).timeout = setTimeout(stopWalking, 200);
+                if (scrollTimeout) clearTimeout(scrollTimeout);
+                scrollTimeout = setTimeout(stopWalking, 200);
             }
 
             lastScrollY = window.scrollY;
@@ -94,11 +96,11 @@ export default function HorizontalScrollGallery() {
             <div ref={triggerRef}>
                 <img
                     src="/stationary.webp"
-                    className="absolute left-30 -translate-x-1/2 z-50 w-60"
+                    className="absolute left-30 -translate-x-1/2 z-5 w-60"
                     style={{ bottom: '20vh' }}
                     id="sprite"
                 />
-                <div className="floor z-50" style={{ width: 'totalScroll' }}></div>
+                <div className="floor z-1" style={{ width: 'totalScroll' }}></div>
                 <div className='scroll-section-inner relative' ref={sectionRef}>
                     <div className='scroll-section'>
 
