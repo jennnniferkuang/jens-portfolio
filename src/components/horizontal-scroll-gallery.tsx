@@ -103,7 +103,71 @@ export default function HorizontalScrollGallery() {
                 <div className="floor z-1" style={{ width: 'totalScroll' }}></div>
                 <div className='scroll-section-inner relative' ref={sectionRef}>
                     <div className='scroll-section'>
+                        <div className="flex flex-col gap-3" style={{ top: '25vh' }}>
+                            <p style={{ fontSize: '100px' }}>Hi! I'm Jen!</p>
+                        </div>
+                        {/* TODO: 
+                            make frame + picture into a component
+                            GET RID OF MAGIC NUMBERS (just a proof of concept rn)
+                            mobile view PLEASE
+                        */}
+                        <img
+                            src="/frame1x1-white.webp"
+                            className="absolute left-30 z-5 w-60"
+                            style={{ bottom: '60vh' }}
+                        />
+                        <img
+                            src="/me.png"
+                            className="absolute left-42 z-5 w-36"
+                            style={{ bottom: '66vh' }}
+                        />
 
+                        <img
+                            src="/frame2x3-white.webp"
+                            className="absolute left-120 z-5 w-60"
+                            style={{ bottom: '60vh' }}
+                        />
+                        <img
+                            src="/frame2x3-white.webp"
+                            className="absolute left-90 z-5 w-40"
+                            style={{ bottom: '22vh' }}
+                        />
+                        <img
+                            src="/frame1x1-white.webp"
+                            className="absolute left-220 z-5 w-90"
+                            style={{ bottom: '40vh' }}
+                        />
+                        <img
+                            src="/frame1x1-white.webp"
+                            className="absolute left-175 z-5 w-40"
+                            style={{ bottom: '22vh' }}
+                        />
+                    </div>
+                    <div className='scroll-section'>
+                        <div className='flex md:flex-row flex-col gap-4'>
+                            <div className='flex flex-col gap-3'>
+                                <p style={{ fontSize: '30px', justifyItems: 'center', alignItems: 'center' }}>My favourite songs :P</p>
+                                <iframe data-testid="embed-iframe" 
+                                    src="https://open.spotify.com/embed/playlist/4BysGnIA94cTXlFrhoXGen?utm_source=generator" 
+                                    height="352" 
+                                    frameBorder="0" 
+                                    allowFullScreen={true} 
+                                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+                                    loading="lazy">
+                                </iframe>
+                            </div>
+                            <div className='flex flex-col gap-3'>
+                                <p style={{ fontSize: '30px', justifyItems: 'center', alignItems: 'center' }}>My favourite songs :P</p>
+                                <iframe data-testid="embed-iframe" 
+                                    src="https://open.spotify.com/embed/playlist/4BysGnIA94cTXlFrhoXGen?utm_source=generator" 
+                                    height="352" 
+                                    frameBorder="0" 
+                                    allowFullScreen={true} 
+                                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+                                    loading="lazy">
+                                </iframe>
+                            </div>
+                        </div>
                     </div>
                     <div className='scroll-section'>
 
