@@ -6,12 +6,14 @@ import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 
 export default function HorizontalScrollGallery() {
 
-    const sectionRef = useRef(null);
-    const triggerRef = useRef(null);
+    const sectionRef = useRef<HTMLDivElement | null>(null);
+    const triggerRef = useRef<HTMLDivElement | null>(null);
 
     gsap.registerPlugin(ScrollTrigger);
 
     useEffect(() => {
+        if (!sectionRef.current || !triggerRef.current) return;
+
         let lastScrollY = window.scrollY;
         let isWalking = false;
         let frame = 1;
@@ -59,18 +61,24 @@ export default function HorizontalScrollGallery() {
 
         window.addEventListener('scroll', handleScroll);
 
+        const section = sectionRef.current;
+        const trigger = triggerRef.current;
+        const totalScroll = section.scrollWidth - window.innerWidth;
+        console.log(section.scrollWidth)
+
         const pin = gsap.fromTo(sectionRef.current, {
             translateX: 0
         }, {
-            translateX: '-200vw',
+            translateX: -totalScroll,
             ease: 'none',
             duration: 1,
             scrollTrigger: {
                 trigger: triggerRef.current,
                 start: 'top top',
-                end: '2000 top',
+                end: `+=${totalScroll}`,
                 scrub: 0.6,
-                pin: true
+                pin: true,
+                pinSpacing: true
             }
         });
 
@@ -86,18 +94,20 @@ export default function HorizontalScrollGallery() {
             <div ref={triggerRef}>
                 <img
                     src="/stationary.webp"
-                    className="absolute bottom-50 left-50 -translate-x-1/2 z-50 w-60 scale-x-[-1]"
+                    className="absolute left-30 -translate-x-1/2 z-50 w-60"
+                    style={{ bottom: '20vh' }}
                     id="sprite"
                 />
+                <div className="floor z-50" style={{ width: 'totalScroll' }}></div>
                 <div className='scroll-section-inner relative' ref={sectionRef}>
                     <div className='scroll-section'>
-                        <img className="h-full w-full" src="/background.jpg"></img>
+
                     </div>
                     <div className='scroll-section'>
-                        <img className="h-full w-full" src="/background.jpg"></img>
+
                     </div>
                     <div className='scroll-section'>
-                        <img className="h-full w-full" src="/background.jpg"></img>
+                        
                     </div>
                 </div>
             </div>
