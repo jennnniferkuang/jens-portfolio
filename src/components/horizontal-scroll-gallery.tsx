@@ -104,7 +104,7 @@ export default function HorizontalScrollGallery() {
                 <div className='scroll-section-inner relative' ref={sectionRef}>
                     <div className='scroll-section'>
                         <div className="flex flex-col gap-3" style={{ top: '25vh' }}>
-                            <p style={{ fontSize: '100px' }}>Hi! I'm Jen!</p>
+                            <p style={{ fontSize: '100px' }}>Hi! I’m Jen!</p>
                         </div>
                         {/* TODO: 
                             make frame + picture into a component
