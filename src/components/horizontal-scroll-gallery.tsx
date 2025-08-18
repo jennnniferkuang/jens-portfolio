@@ -159,11 +159,22 @@ export default function HorizontalScrollGallery() {
                     </div>
                     <div className='scroll-section'>
                         <div className='flex flex-col gap-3 p-6' style={{ justifyItems: 'center', alignItems: 'center' }}>
-                            <p style={{ fontSize: '50px' }}>Fun Fact!</p>
+                            <p style={{ textAlign: 'center', fontSize: '50px' }}>Fun Fact!</p>
                             <p style={{ textAlign: 'center', fontSize: '25px' }}>This site is a tribute to my first EVER game called Out of Sight, a 2D horror platformer which is a totally dookie piece of code, but it still means a lot to me to this day! You can check it out here:</p>
                             <div className='flex flex-row gap-4'>
                             <Button as="a" color='dark' href="https://youtu.be/wUkGteWnN54" target="_blank">Demo</Button>
                             <Button as="a" color='dark' href="https://github.com/jennnniferkuang/Out-of-Sight" target="_blank">Repo</Button>
+                            </div>
+                        </div>
+                    </div>
+                    <div className='scroll-section'>
+                        <div className='flex flex-col gap-3 p-6' style={{ justifyItems: 'center', alignItems: 'center' }}>
+                            <p style={{ textAlign: 'center', fontSize: '30px' }}>This site is still under construction!</p>
+                            <p style={{ textAlign: 'center', fontSize: '25px' }}>A lot more fun things to come, but for now, learn more about me by checking out my:</p>
+                            <div className='flex flex-row gap-4'>
+                            <Button as="a" color='dark' href="https://github.com/jennnniferkuang" target="_blank">GitHub</Button>
+                            <Button as="a" color='dark' href="https://devpost.com/jennnniferkuang?ref_content=user-portfolio&ref_feature=portfolio&ref_medium=global-nav&_gl=1*1qqzdkq*_gcl_au*Mjc1NTk4NDEuMTc0ODQzNjExMw..*_ga*MTg2NjAyNTM0OC4xNzQ4NDM2MTEz*_ga_0YHJK3Y10M*czE3NTU1Mzc4MDIkbzEyJGcxJHQxNzU1NTM3ODA3JGo1NSRsMCRoMA" target="_blank">Devpost</Button>
+                            <Button as="a" color='dark' href="https://drive.google.com/file/d/1XUg5-LMHmn9yxra0V4K48jUq0PasT_Gj/view?usp=drive_link" target="_blank">Resume!</Button>
                             </div>
                         </div>
                     </div>
