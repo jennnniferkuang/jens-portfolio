@@ -25,7 +25,6 @@ header {
   align-items: center !important; /* align-middle in Tailwind is align-items: center */
   background: white;
   color: black;
-  padding: 24px;
 }
 
 .navbar {
@@ -48,7 +47,7 @@ header {
 
 .scroll-section-inner {
   height: 100vh;
-  width: 400vw;
+  /* width: 400vw; <- to be set in tsx */
   display: flex;
   flex-direction: row;
   position: relative;
