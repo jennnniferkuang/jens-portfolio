@@ -144,16 +144,30 @@ export default function HorizontalScrollGallery() {
                     </div>
                     <div className='scroll-section'>
                         <div className='flex md:flex-row flex-col gap-4'>
-                            <div className='flex flex-col gap-3'>
-                                <p style={{ textAlign: 'center', fontSize: '30px' }}>My favourite songs :P</p>
-                                <iframe data-testid="embed-iframe" 
-                                    src="https://open.spotify.com/embed/playlist/4BysGnIA94cTXlFrhoXGen?utm_source=generator" 
-                                    height="352" 
-                                    frameBorder="0" 
-                                    allowFullScreen={true} 
-                                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
-                                    loading="lazy">
-                                </iframe>
+                            <div className='flex flex-col sm:flex-row gap-3'>
+                                <div className='flex flex-col gap-3'>
+                                    <p style={{ textAlign: 'center', fontSize: '30px' }}>My favourite songs :P</p>
+                                    <iframe data-testid="embed-iframe" 
+                                        src="https://open.spotify.com/embed/playlist/4BysGnIA94cTXlFrhoXGen?utm_source=generator" 
+                                        height="200 sm:352" 
+                                        frameBorder="0" 
+                                        allowFullScreen={true} 
+                                        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+                                        loading="lazy">
+                                    </iframe>
+                                </div>
+                                <div className='flex flex-col gap-3'>
+                                    <p style={{ textAlign: 'center', fontSize: '30px' }}>Losercore Computer Playlist</p>
+                                    <iframe data-testid="embed-iframe" 
+                                        src="https://open.spotify.com/embed/playlist/7JNWAdUP3DNIM3vpctdw93?utm_source=generator" 
+                                        width="100%" 
+                                        height="200 sm:352" 
+                                        frameBorder="0" 
+                                        allowFullScreen={true} 
+                                        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+                                        loading="lazy">
+                                    </iframe>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -170,11 +184,16 @@ export default function HorizontalScrollGallery() {
                     <div className='scroll-section'>
                         <div className='flex flex-col gap-3 p-6' style={{ justifyItems: 'center', alignItems: 'center' }}>
                             <p style={{ textAlign: 'center', fontSize: '30px' }}>This site is still under construction!</p>
-                            <p style={{ textAlign: 'center', fontSize: '25px' }}>A lot more fun things to come, but for now, learn more about me by checking out my:</p>
+                            <p style={{ textAlign: 'center', fontSize: '25px' }}>More exciting things to come, but for now, learn more about me by checking out my:</p>
                             <div className='flex flex-row gap-4'>
                             <Button as="a" color='dark' href="https://github.com/jennnniferkuang" target="_blank">GitHub</Button>
                             <Button as="a" color='dark' href="https://devpost.com/jennnniferkuang?ref_content=user-portfolio&ref_feature=portfolio&ref_medium=global-nav&_gl=1*1qqzdkq*_gcl_au*Mjc1NTk4NDEuMTc0ODQzNjExMw..*_ga*MTg2NjAyNTM0OC4xNzQ4NDM2MTEz*_ga_0YHJK3Y10M*czE3NTU1Mzc4MDIkbzEyJGcxJHQxNzU1NTM3ODA3JGo1NSRsMCRoMA" target="_blank">Devpost</Button>
                             <Button as="a" color='dark' href="https://drive.google.com/file/d/1XUg5-LMHmn9yxra0V4K48jUq0PasT_Gj/view?usp=drive_link" target="_blank">Resume!</Button>
+                            </div>
+                            <p style={{ textAlign: 'center', fontSize: '30px' }}>Other fun places to get to know me:</p>
+                            <div className='flex flex-row gap-4'>
+                            <Button as="a" color='dark' href="https://steamcommunity.com/id/cornflaekes/" target="_blank">Steam</Button>
+                            <Button as="a" color='dark' href="https://open.spotify.com/user/31vscmisfq4qozqjnpr35sdab4qe?si=c3ff83da36ec4390" target="_blank">Spotify</Button>
                             </div>
                         </div>
                     </div>
