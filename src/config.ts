@@ -1,1 +1,1 @@
-export const SECTION_COUNT = 4;
+export const SECTION_COUNT = 3;

@@ -128,19 +128,19 @@ export default function HorizontalScrollGallery() {
                             frame={3}
                             xPos={82}
                             yPos={25}
-                            width={25}/>
+                            width={20}/>
                         <PictureFrame
                             imgSrc='/burlington.jpg'
                             frame={1}
                             xPos={70}
-                            yPos={67}
+                            yPos={65}
                             width={15}/>
                         <PictureFrame
                             imgSrc='/comp-sci-museum.jpg'
                             frame={1}
-                            xPos={15}
-                            yPos={60}
-                            width={25}/>
+                            xPos={20}
+                            yPos={55}
+                            width={20}/>
                     </div>
                     <div className='scroll-section'>
                         <div className='flex md:flex-row flex-col gap-4'>
@@ -156,9 +156,6 @@ export default function HorizontalScrollGallery() {
                                 </iframe>
                             </div>
                         </div>
-                    </div>
-                    <div className='scroll-section'>
-
                     </div>
                     <div className='scroll-section'>
                         <div className='flex flex-col gap-3 p-6' style={{ justifyItems: 'center', alignItems: 'center' }}>
