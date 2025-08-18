@@ -15,9 +15,9 @@ const title = Almendra({
 
 export const metadata: Metadata = {
   title: "Jennifer's Epic Portfolio",
-  description: "#1 software engineer unreal fortnite player and reels scroller",
+  description: "#1 software engineer d1 fortnite player and reels scroller",
   icons: {
-    icon: '/me.png'
+    icon: '/key-white.webp'
   }
 };
 

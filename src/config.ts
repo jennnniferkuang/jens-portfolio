@@ -1,0 +1,1 @@
+export const SECTION_COUNT = 4;
