@@ -149,10 +149,10 @@ export default function HorizontalScrollGallery() {
                             <p style={{ textAlign: 'start', fontSize: '25px' }}>About Me:</p>
                             <ul>
                                 <li style={{ textAlign: 'start', fontSize: '20px' }}>
-                                    I'm a 2nd year software engineering student at the University of Waterloo
+                                    I’m a 2nd year software engineering student at the University of Waterloo
                                 </li>
                                 <li style={{ textAlign: 'start', fontSize: '20px' }}>
-                                    I'm from Calgary, AB!
+                                    I’m from Calgary, AB!
                                 </li>
                                 <li style={{ textAlign: 'start', fontSize: '20px' }}>
                                     I luv making/playing video games
