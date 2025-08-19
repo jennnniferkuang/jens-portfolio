@@ -15,6 +15,8 @@ export default function HorizontalScrollGallery() {
     const sectionRef = useRef<HTMLDivElement | null>(null);
     const triggerRef = useRef<HTMLDivElement | null>(null);
 
+    const playlistHeight = isMobile ? 200 : 352; 
+
     gsap.registerPlugin(ScrollTrigger);
 
     useEffect(() => {
@@ -143,13 +145,38 @@ export default function HorizontalScrollGallery() {
                             width={20}/>
                     </div>
                     <div className='scroll-section'>
+                        <div className='flex flex-col gap-3 p-6' style={{ justifyItems: 'center' }}>
+                            <p style={{ textAlign: 'start', fontSize: '25px' }}>About Me:</p>
+                            <ul>
+                                <li style={{ textAlign: 'start', fontSize: '20px' }}>
+                                    I'm a 2nd year software engineering student at the University of Waterloo
+                                </li>
+                                <li style={{ textAlign: 'start', fontSize: '20px' }}>
+                                    I'm from Calgary, AB!
+                                </li>
+                                <li style={{ textAlign: 'start', fontSize: '20px' }}>
+                                    I luv making/playing video games
+                                </li>
+                                <li style={{ textAlign: 'start', fontSize: '20px' }}>
+                                    I luv skiing and biking and adventuring
+                                </li>
+                                <li style={{ textAlign: 'start', fontSize: '20px' }}>
+                                    I luv music and concerts
+                                </li>
+                                <li style={{ textAlign: 'start', fontSize: '20px' }}>
+                                    I do art! (commissions coming soon???) I also luv crafting and making trinkets (shop coming soon???)
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div className='scroll-section'>
                         <div className='flex md:flex-row flex-col gap-4'>
                             <div className='flex flex-col sm:flex-row gap-3'>
                                 <div className='flex flex-col gap-3'>
                                     <p style={{ textAlign: 'center', fontSize: '30px' }}>My favourite songs :P</p>
                                     <iframe data-testid="embed-iframe" 
                                         src="https://open.spotify.com/embed/playlist/4BysGnIA94cTXlFrhoXGen?utm_source=generator" 
-                                        height="200 sm:352" 
+                                        height={playlistHeight}
                                         frameBorder="0" 
                                         allowFullScreen={true} 
                                         allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
@@ -161,7 +188,7 @@ export default function HorizontalScrollGallery() {
                                     <iframe data-testid="embed-iframe" 
                                         src="https://open.spotify.com/embed/playlist/7JNWAdUP3DNIM3vpctdw93?utm_source=generator" 
                                         width="100%" 
-                                        height="200 sm:352" 
+                                        height={playlistHeight}
                                         frameBorder="0" 
                                         allowFullScreen={true} 
                                         allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
