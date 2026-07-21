@@ -4,7 +4,7 @@
 
 :root {
   --navbar-height: 3.5rem;
-  --floor-height: 20dvh;
+  --floor-height: 20svh;
 }
 
 html,
@@ -58,7 +58,7 @@ header {
 }
 
 .scroll-section-inner {
-  height: 100dvh;
+  height: 100svh;
   /* width: 400vw; <- to be set in tsx */
   display: flex;
   flex-direction: row;
@@ -68,7 +68,7 @@ header {
 .scroll-section {
   position: relative;
   flex: 0 0 100vw;
-  height: 100dvh;
+  height: 100svh;
   width: 100vw;
   background: black;
   color: white;
