@@ -1,12 +1,14 @@
 'use client';
 
+import Image from 'next/image';
+
 /* Frame sizes:
 1 -> 1x1 white
 2 -> 2x3 white
 3 -> 3x2 white (2x3 rotated)
 */
 
-// parameters in relation to vh and vw
+// Position parameters are percentages of the nearest gallery canvas.
 export default function PictureFrame({
     imgSrc = '/me.png',
     frame = 1,
@@ -40,23 +42,23 @@ export default function PictureFrame({
         <div
             className="absolute"
             style={{
-            top: `${yPos}vh`,
-            left: `${xPos}vw`,
+            top: `${yPos}%`,
+            left: `${xPos}%`,
             width: `${width}vw`,
             transform: `translate(-50%, -50%) rotate(${rotation})`, // center the container
             }}>
 
             {/* Frame */}
-            <img src={frameSrc} className="w-full relative z-1"/>
+            <Image src={frameSrc} className="w-full relative z-1" alt="" width={100} height={100} />
 
             {/* Inner picture */}
-            <img
+            <Image
             src={imgSrc}
             className="absolute inset-0 m-auto z-0"
             style={{
                 width: `${scale * 100}%`,
                 height: 'auto',
-            }}/>
+            }} alt="" width={100} height={100} />
         </div>
     );
 }
