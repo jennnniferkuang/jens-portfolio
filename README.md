@@ -11,6 +11,12 @@ npm run build
 npm start
 ```
 
+To install dependencies:
+```cli
+bun i
+npm i
+```
+
 To apply database changes and generate Prisma migration:
 ```cli
 npx prisma format

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef, useEffect } from 'react';
+import { useRef, useEffect } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 import { Button } from 'flowbite-react';
@@ -9,6 +9,8 @@ import Image from 'next/image';
 
 gsap.registerPlugin(ScrollTrigger);
 ScrollTrigger.config({ ignoreMobileResize: true });
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function HorizontalScrollGallery() {
     const sectionRef = useRef<HTMLDivElement | null>(null);
@@ -54,11 +56,12 @@ export default function HorizontalScrollGallery() {
 
         const handleScroll = () => {
             const delta = window.scrollY - lastScrollY;
+            const sprite = spriteRef.current;
 
-            if (delta > 1) {
+            if (sprite && delta > 1) {
                 // scrolling down → face right
                 sprite.style.transform = 'scaleX(1)';
-            } else if (delta < -1) {
+            } else if (sprite && delta < -1) {
                 // scrolling up → face left
                 sprite.style.transform = 'scaleX(-1)';
             }
@@ -79,7 +82,7 @@ export default function HorizontalScrollGallery() {
         const getTotalScroll = () =>
             Math.max(0, section.scrollWidth - document.documentElement.clientWidth);
 
-        const pin = gsap.fromTo(section, {
+        const ctx = gsap.fromTo(section, {
             x: 0
         }, {
             x: () => -getTotalScroll(),
@@ -97,7 +100,7 @@ export default function HorizontalScrollGallery() {
         });
 
         return () => {
-            pin.kill();
+            ctx.revert();
             window.removeEventListener('scroll', handleScroll);
             clearInterval(interval);
             if (scrollTimeout) clearTimeout(scrollTimeout);
