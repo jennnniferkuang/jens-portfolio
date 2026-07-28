@@ -20,14 +20,18 @@
 .eyebrow {
   margin: 0 0 0.5rem;
   color: #a3a3a3;
-  font-size: 0.75rem;
+  font-size: calc(0.75rem * var(--font-scale));
   letter-spacing: 0.18em;
   text-transform: uppercase;
 }
 
 .title {
   margin: 0;
-  font-size: clamp(2rem, 8vw, 3rem);
+  font-size: clamp(
+    calc(2rem * var(--font-scale)),
+    calc(8vw * var(--font-scale)),
+    calc(3rem * var(--font-scale))
+  );
   line-height: 1;
 }
 
@@ -50,7 +54,7 @@
 
 .label {
   color: #d7d7d7;
-  font-size: 0.9rem;
+  font-size: calc(0.9rem * var(--font-scale));
 }
 
 .input {

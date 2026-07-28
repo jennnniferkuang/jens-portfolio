@@ -4,13 +4,17 @@
 
 :root {
   --navbar-height: 3.5rem;
-  --floor-height: 20svh;
+  --stage-height: 100dvh;
+  --floor-top: 80dvh;
+  --floor-height: 50dvh;
+  --font-scale: 1;
 }
 
 html,
 body {
   background: black;
   color: white;
+  font-size: calc(1rem * var(--font-scale));
   max-width: 100%;
   overflow-x: clip;
   /* font-family: Arial, Helvetica, sans-serif; */
@@ -58,7 +62,7 @@ header {
 }
 
 .scroll-section-inner {
-  height: 100svh;
+  height: var(--stage-height);
   /* width: 400vw; <- to be set in tsx */
   display: flex;
   flex-direction: row;
@@ -68,7 +72,7 @@ header {
 .scroll-section {
   position: relative;
   flex: 0 0 100vw;
-  height: 100svh;
+  height: var(--stage-height);
   width: 100vw;
   background: black;
   color: white;
@@ -76,7 +80,7 @@ header {
 
 .gallery-canvas {
   position: absolute;
-  inset: var(--navbar-height) 0 var(--floor-height);
+  inset: var(--navbar-height) 0 calc(var(--stage-height) - var(--floor-top));
   min-width: 0;
   overflow: hidden;
   display: flex;
@@ -86,9 +90,32 @@ header {
 
 .floor {
   position: absolute;
-  bottom: 0;
+  top: var(--floor-top);
   left: 0;
   height: var(--floor-height);
   width: 100vw;
   background: white;
+}
+
+.walker {
+  bottom: calc(var(--stage-height) - var(--floor-top));
+}
+
+.spotify-embed {
+  width: min(24rem, calc(100vw - 3rem));
+  height: 352px;
+}
+
+.gallery-canvas a {
+  font-size: calc(0.875rem * var(--font-scale));
+}
+
+@media (max-width: 700px) {
+  :root {
+    --font-scale: 0.8;
+  }
+
+  .spotify-embed {
+    height: 152px;
+  }
 }
