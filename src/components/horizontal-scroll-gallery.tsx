@@ -9,6 +9,7 @@ import { SECTION_COUNT } from '@/config';
 import Image from 'next/image';
 
 gsap.registerPlugin(ScrollTrigger);
+ScrollTrigger.config({ ignoreMobileResize: true });
 
 export default function HorizontalScrollGallery() {
 
