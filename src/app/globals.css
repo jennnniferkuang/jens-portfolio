@@ -98,7 +98,7 @@ header {
 }
 
 .walker {
-  bottom: calc(var(--stage-height) - var(--floor-top));
+  bottom: 100%;
 }
 
 .spotify-embed {

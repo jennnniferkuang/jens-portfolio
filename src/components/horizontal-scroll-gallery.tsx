@@ -107,17 +107,18 @@ export default function HorizontalScrollGallery() {
     return (
         <section className='scroll-section-outer relative'>
             <div ref={triggerRef} className="relative">
-                <Image
-                    src="/stationary.webp"
-                    className="walker absolute left-15 sm:left-30 -translate-x-1/2 z-5 w-30 sm:w-60"
-                    ref={spriteRef}
-                    alt=""
-                    width={100}
-                    height={100}
-                    loading="eager"
-                    unoptimized
-                />
-                <div className="floor z-1"></div>
+                <div className="floor z-1">
+                    <Image
+                        src="/stationary.webp"
+                        className="walker absolute left-15 sm:left-30 -translate-x-1/2 z-5 w-30 sm:w-60"
+                        ref={spriteRef}
+                        alt=""
+                        width={100}
+                        height={100}
+                        loading="eager"
+                        unoptimized
+                    />
+                </div>
                 <div className='scroll-section-inner relative' ref={sectionRef} style={{ width: `${SECTION_COUNT * 100 }vw`}}>
                     <div className='scroll-section'>
                         <div className="gallery-canvas">
