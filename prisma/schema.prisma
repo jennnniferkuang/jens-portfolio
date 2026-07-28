@@ -1,0 +1,67 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Blob {
+  id         String @id @default(uuid()) @db.Uuid
+  bucket     String
+  path       String @unique
+  media_type String
+  size       Int
+
+  images Image[]
+
+  @@index([id])
+}
+
+enum Origin {
+  GALLERY
+  JOURNAL
+  PROJECTS
+  VISITOR_GALLERY
+}
+
+model Image {
+  id       String  @id @default(uuid()) @db.Uuid
+  blobId   String  @db.Uuid
+  name     String
+  width    Int
+  height   Int
+  origin   Origin
+  alt_text String?
+
+  blob                 Blob                @relation(fields: [blobId], references: [id])
+  journal_entry_images JournalEntryImage[]
+
+  @@index([id])
+}
+
+model JournalEntryImage {
+  id               String @id @default(uuid()) @db.Uuid
+  image_id         String @db.Uuid
+  journal_entry_id String @db.Uuid
+  entry_key        String
+
+  image         Image        @relation(fields: [image_id], references: [id])
+  journal_entry JournalEntry @relation(fields: [journal_entry_id], references: [id])
+
+  @@index([id])
+}
+
+model JournalEntry {
+  id           String    @id @default(uuid()) @db.Uuid
+  title        String
+  content      String
+  created_at   DateTime  @default(now())
+  updated_at   DateTime  @updatedAt
+  published_at DateTime?
+
+  journal_entry_images JournalEntryImage[]
+
+  @@index([id])
+}
