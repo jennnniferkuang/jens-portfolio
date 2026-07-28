@@ -1,6 +1,8 @@
 Hi welcome to my epic portfolio mono-repo :P
 Deployed/hosted on Vercel, using Supabase DB and Prisma infra.
 
+Live site: jenniferkuang.me[https://jenniferkuang.me/]
+
 # Notes for self/devs
 
 To start frontend locally:
