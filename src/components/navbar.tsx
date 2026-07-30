@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-// import { Menu, X } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -19,10 +19,10 @@ export default function Navbar() {
 				</div>
 			</Link>
 			<div className='hidden flex-row gap-4 md:flex'>
-				{/* <Link className='navbar-text' href='/journal'>Journal</Link> 
-				<Link className='navbar-text' href='/commissions'>Commissions</Link> */}
+				<Link className='navbar-text' href='/journal'>Journal</Link> 
+				{/* <Link className='navbar-text' href='/commissions'>Commissions</Link> */}
 			</div>
-			{/* <button
+			<button
 				type='button'
 				className='flex size-10 items-center justify-center md:hidden'
 				aria-label={isMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
@@ -31,15 +31,14 @@ export default function Navbar() {
 				onClick={() => setIsMenuOpen((isOpen) => !isOpen)}
 			>
 				{isMenuOpen ? <X aria-hidden='true' /> : <Menu aria-hidden='true' />}
-			</button> */}
+			</button>
 			{isMenuOpen && (
 				<div
 					id='mobile-navigation'
 					className='absolute inset-x-0 top-full flex w-full flex-col bg-white p-2 shadow-lg md:hidden'
 				>
-					<Link className='px-3 py-2 text-black' href='/' onClick={closeMenu}>Home</Link>
 					<Link className='px-3 py-2 text-black' href='/journal' onClick={closeMenu}>Journal</Link>
-					<Link className='px-3 py-2 text-black' href='/commissions' onClick={closeMenu}>Commissions</Link>
+					{/* <Link className='px-3 py-2 text-black' href='/commissions' onClick={closeMenu}>Commissions</Link> */}
 				</div>
 			)}
 		</nav>

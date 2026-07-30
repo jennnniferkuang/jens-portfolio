@@ -1,72 +1,76 @@
 import "server-only";
 
-import { readFile, readdir } from "node:fs/promises";
-import path from "node:path";
-import matter from "gray-matter";
+import { prisma } from "@/lib/prisma";
 
-const journalDirectory = path.join(process.cwd(), "src/content/journal");
-const validSlug = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+const validId =
+  /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
 export type JournalEntry = {
   slug: string;
   title: string;
   description: string;
   pinned: boolean;
-  markdown: string;
+  content: string;
 };
 
-function titleFromMarkdown(markdown: string, slug: string) {
-  const heading = markdown.match(/^#\s+(.+)$/m);
+export type JournalEntrySummary = Omit<JournalEntry, "content">;
 
-  return heading?.[1].trim() ?? slug.replaceAll("-", " ");
-}
-
-export async function getJournalEntry(slug: string): Promise<JournalEntry | null> {
-  if (!validSlug.test(slug)) {
+export async function getJournalEntry(
+  slug: string,
+): Promise<JournalEntry | null> {
+  if (!validId.test(slug)) {
     return null;
   }
 
-  try {
-    const source = await readFile(
-      path.join(journalDirectory, `${slug}.md`),
-      "utf8",
-    );
-    const { content: markdown, data } = matter(source);
+  const entry = await prisma.journalEntry.findFirst({
+    where: {
+      id: slug,
+      published_at: { not: null },
+    },
+    select: {
+      id: true,
+      title: true,
+      description: true,
+      pinned: true,
+      content: true,
+    },
+  });
 
-    return {
-      slug,
-      title: titleFromMarkdown(markdown, slug),
-      description:
-        typeof data.description === "string" ? data.description.trim() : "",
-      pinned: data.pinned === true,
-      markdown,
-    };
-  } catch (error) {
-    if (
-      error instanceof Error &&
-      "code" in error &&
-      error.code === "ENOENT"
-    ) {
-      return null;
-    }
-
-    throw error;
+  if (!entry) {
+    return null;
   }
+
+  return {
+    slug: entry.id,
+    title: entry.title,
+    description: entry.description,
+    pinned: entry.pinned,
+    content: entry.content,
+  };
 }
 
-export async function getJournalEntries(): Promise<JournalEntry[]> {
-  const files = await readdir(journalDirectory, { withFileTypes: true });
-  const entries = await Promise.all(
-    files
-      .filter((file) => file.isFile() && file.name.endsWith(".md"))
-      .map((file) => getJournalEntry(file.name.slice(0, -3))),
-  );
+export async function getJournalEntries(): Promise<JournalEntrySummary[]> {
+  const entries = await prisma.journalEntry.findMany({
+    where: {
+      published_at: { not: null },
+    },
+    orderBy: [
+      { pinned: "desc" },
+      { published_at: "desc" },
+      { created_at: "desc" },
+    ],
+    select: {
+      id: true,
+      title: true,
+      description: true,
+      pinned: true,
+    },
+  });
 
-  return entries
-    .filter((entry): entry is JournalEntry => entry !== null)
-    .sort(
-      (a, b) =>
-        Number(b.pinned) - Number(a.pinned) ||
-        a.title.localeCompare(b.title),
-    );
+  return entries.map((entry) => ({
+    slug: entry.id,
+    title: entry.title,
+    description: entry.description,
+    pinned: entry.pinned,
+  }));
 }

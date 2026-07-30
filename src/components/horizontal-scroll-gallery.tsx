@@ -125,8 +125,9 @@ export default function HorizontalScrollGallery() {
                 <div className='scroll-section-inner relative' ref={sectionRef} style={{ width: `${SECTION_COUNT * 100 }vw`}}>
                     <div className='scroll-section'>
                         <div className="gallery-canvas">
-                            <div className="flex flex-col gap-3">
+                            <div className="flex flex-col gap-2">
                                 <p style={{ fontSize: 'calc(100px * var(--font-scale))', textAlign: 'center' }}>Hi! I’m Jen!</p>
+                                <p style={{ textAlign: 'center', fontSize: 'calc(20px * var(--font-scale))' }}>scroll down to explore the exhibit</p>
                             </div>
                             <div className="first-page-photo-gallery">
                                 {/* <PictureFrame
@@ -171,7 +172,7 @@ export default function HorizontalScrollGallery() {
                                         I’m a 2nd year software engineering student at the University of Waterloo
                                     </li>
                                     <li style={{ textAlign: 'start', fontSize: 'calc(20px * var(--font-scale))' }}>
-                                        I’m from Calgary, AB!
+                                        I’m currently on a gap year working as a founding engineer at a startup called Otto-SR
                                     </li>
                                     <li style={{ textAlign: 'start', fontSize: 'calc(20px * var(--font-scale))' }}>
                                         I luv making/playing video games
@@ -180,10 +181,7 @@ export default function HorizontalScrollGallery() {
                                         I luv skiing and biking and adventuring
                                     </li>
                                     <li style={{ textAlign: 'start', fontSize: 'calc(20px * var(--font-scale))' }}>
-                                        I luv music and concerts
-                                    </li>
-                                    <li style={{ textAlign: 'start', fontSize: 'calc(20px * var(--font-scale))' }}>
-                                        I do art! (commissions coming soon???) I also luv crafting and making trinkets (shop coming soon???)
+                                        I do art and I love crafting (making a sister art site soon!)
                                     </li>
                                 </ul>
                             </div>
