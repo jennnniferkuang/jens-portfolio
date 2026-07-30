@@ -8,7 +8,7 @@ Live site: https://jenniferkuang.me/
 To start frontend locally:
 ```cli
 npm run build
-npm run dev // will automatically refresh on changes
+npm run dev # will automatically refresh on changes
 ```
 
 To install dependencies:
