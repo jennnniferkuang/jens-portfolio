@@ -27,6 +27,7 @@ npx prisma generate
 
 # Bug backlog
 - mobile scroll at very end slightly cut off until you scroll down hard to bring up the search bar (safari at least)
+- just everything wrong with mobile horizontal view
 
 # To do
 - Project gallery
