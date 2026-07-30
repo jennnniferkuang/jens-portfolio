@@ -2,7 +2,7 @@ import ReactMarkdown, { type Components } from "react-markdown";
 
 const markdownComponents: Components = {
   h1: ({ children }) => (
-    <h1 className="text-4xl font-semibold tracking-tight">{children}</h1>
+    <h2 className="mt-10 text-3xl font-semibold">{children}</h2>
   ),
   h2: ({ children }) => (
     <h2 className="mt-10 text-3xl font-semibold">{children}</h2>
@@ -47,13 +47,25 @@ const markdownComponents: Components = {
 };
 
 type JournalEntryProps = {
-  markdown: string;
+  title: string;
+  description: string;
+  content: string;
 };
 
-export default function JournalEntry({ markdown }: JournalEntryProps) {
+export default function JournalEntry({
+  title,
+  description,
+  content,
+}: JournalEntryProps) {
   return (
     <article className="mx-auto max-w-2xl">
-      <ReactMarkdown components={markdownComponents}>{markdown}</ReactMarkdown>
+      <h1 className="text-4xl font-semibold tracking-tight">{title}</h1>
+      {description ? (
+        <p className="mt-4 text-lg text-neutral-400">{description}</p>
+      ) : null}
+      <div className="mt-8">
+        <ReactMarkdown components={markdownComponents}>{content}</ReactMarkdown>
+      </div>
     </article>
   );
 }

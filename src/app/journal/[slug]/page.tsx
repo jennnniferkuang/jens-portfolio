@@ -2,17 +2,13 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import JournalEntry from "@/components/journal-entry";
-import { getJournalEntries, getJournalEntry } from "@/lib/journal";
+import { getJournalEntry } from "@/lib/journal";
 
 type JournalEntryPageProps = {
   params: Promise<{ slug: string }>;
 };
 
-export async function generateStaticParams() {
-  const entries = await getJournalEntries();
-
-  return entries.map(({ slug }) => ({ slug }));
-}
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata({
   params,
@@ -38,7 +34,11 @@ export default async function JournalEntryPage({
 
   return (
     <main className="px-4 py-24">
-      <JournalEntry markdown={entry.markdown} />
+      <JournalEntry
+        content={entry.content}
+        description={entry.description}
+        title={entry.title}
+      />
     </main>
   );
 }
