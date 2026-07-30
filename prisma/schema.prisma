@@ -56,7 +56,9 @@ model JournalEntryImage {
 model JournalEntry {
   id           String    @id @default(uuid()) @db.Uuid
   title        String
+  description  String
   content      String
+  pinned       Boolean   @default(false)
   created_at   DateTime  @default(now())
   updated_at   DateTime  @updatedAt
   published_at DateTime?
