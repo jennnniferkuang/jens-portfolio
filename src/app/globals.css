@@ -112,9 +112,19 @@ body {
   inset: var(--navbar-height) 0 calc(var(--stage-height) - var(--floor-top));
   min-width: 0;
   overflow: hidden;
+  isolation: isolate;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.gallery-room-content {
+  position: relative;
+  z-index: 10;
+}
+
+.gallery-frame-layer {
+  contain: layout paint;
 }
 
 .floor {
@@ -136,7 +146,7 @@ body {
 }
 
 .gallery-canvas a {
-  font-size: calc(0.875rem * var(--font-scale));
+  font-size: calc(0.875rem * var(--font-scale, 1));
 }
 
 @media (max-width: 700px) {

@@ -1,10 +1,17 @@
-// import Image from "next/image";
 import HorizontalScrollGallery from '@/components/horizontal-scroll-gallery';
+import { TOTAL_GALLERY_PICTURES } from '@/lib/gallery-config';
+import { getGalleryImageSources } from '@/lib/gallery';
 
-export default function Home() {
+export const dynamic = "force-dynamic";
+
+export default async function Home() {
+  const galleryImageSources = await getGalleryImageSources(
+    TOTAL_GALLERY_PICTURES,
+  );
+
   return (
     <div>
-      <HorizontalScrollGallery/>
+      <HorizontalScrollGallery galleryImageSources={galleryImageSources} />
     </div>
   );
 }
