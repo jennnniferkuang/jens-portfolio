@@ -25,6 +25,13 @@ npx prisma migrate dev --name init_content
 npx prisma generate
 ```
 
+## Art market payments
+The `/payments` page creates one-time Stripe Checkout Sessions using
+`STRIPE_SECRET_KEY`. The online payment charge defaults to 2% and can be
+configured with hardcoded constants in `market-payments.ts`.
+`feeRateBps` uses basis points, so `200` means 2%. Amounts
+ending in `Cents` use Canadian cents.
+
 # Bug backlog
 - mobile scroll at very end slightly cut off until you scroll down hard to bring up the search bar (safari at least)
 - just everything wrong with mobile horizontal view
