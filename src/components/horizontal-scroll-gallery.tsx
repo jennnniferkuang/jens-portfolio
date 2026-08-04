@@ -8,7 +8,7 @@ import { SECTION_COUNT } from '@/config';
 import Image from 'next/image';
 import GalleryFrames from '@/components/gallery-frames';
 import { GALLERY_ROOM_SETTINGS } from '@/lib/gallery-config';
-import type { GalleryFrameVariant, GalleryRoomConfig } from '@/lib/gallery-placement';
+import type { GalleryImage, GalleryRoomConfig } from '@/lib/gallery-placement';
 
 gsap.registerPlugin(ScrollTrigger);
 ScrollTrigger.config({ ignoreMobileResize: true });
@@ -16,11 +16,11 @@ ScrollTrigger.config({ ignoreMobileResize: true });
 gsap.registerPlugin(ScrollTrigger);
 
 type HorizontalScrollGalleryProps = {
-    galleryImageSources: string[];
+    galleryImages: GalleryImage[];
 };
 
 function distributeImagesAcrossRooms(
-    galleryImageSources: string[],
+    galleryImages: GalleryImage[],
 ): GalleryRoomConfig[] {
     const rooms = GALLERY_ROOM_SETTINGS.map((room) => ({
         ...room,
@@ -28,42 +28,31 @@ function distributeImagesAcrossRooms(
     })) as GalleryRoomConfig[];
     let sourceIndex = 0;
 
-    while (sourceIndex < galleryImageSources.length) {
-        let assignedInRound = false;
-
-        for (const room of rooms) {
-            if (
-                sourceIndex >= galleryImageSources.length ||
-                room.images.length >= room.count
-            ) {
-                continue;
-            }
-
-            room.images.push({
-                src: galleryImageSources[sourceIndex],
-                frame: ((sourceIndex % 3) + 1) as GalleryFrameVariant,
-            });
-            sourceIndex += 1;
-            assignedInRound = true;
-        }
-
-        if (!assignedInRound) {
+    for (const room of rooms) {
+        if (sourceIndex >= galleryImages.length) {
             break;
         }
+
+        const roomEnd = Math.min(
+            sourceIndex + room.count,
+            galleryImages.length,
+        );
+        room.images.push(...galleryImages.slice(sourceIndex, roomEnd));
+        sourceIndex = roomEnd;
     }
 
     return rooms;
 }
 
 export default function HorizontalScrollGallery({
-    galleryImageSources,
+    galleryImages,
 }: HorizontalScrollGalleryProps) {
     const sectionRef = useRef<HTMLDivElement | null>(null);
     const triggerRef = useRef<HTMLDivElement | null>(null);
     const spriteRef = useRef<HTMLImageElement | null>(null);
     const galleryRooms = useMemo(
-        () => distributeImagesAcrossRooms(galleryImageSources),
-        [galleryImageSources],
+        () => distributeImagesAcrossRooms(galleryImages),
+        [galleryImages],
     );
 
     useEffect(() => {

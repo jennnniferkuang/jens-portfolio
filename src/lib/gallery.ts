@@ -3,6 +3,10 @@ import "server-only";
 import { randomInt } from "node:crypto";
 
 import { Origin } from "@/generated/prisma/client";
+import {
+  GalleryFrameVariant,
+  type GalleryImage,
+} from "@/lib/gallery-placement";
 import { prisma } from "@/lib/prisma";
 import { createAdminClient } from "@/lib/supabase/admin";
 
@@ -20,7 +24,23 @@ function shuffle<T>(values: T[]) {
   return shuffled;
 }
 
-export async function getGalleryImageSources(limit: number) {
+function getFrameVariant(width: number, height: number): GalleryFrameVariant {
+  const aspectRatio = width / height;
+
+  if (aspectRatio > 1.2) {
+    return GalleryFrameVariant.LANDSCAPE;
+  }
+
+  if (aspectRatio < 0.8) {
+    return GalleryFrameVariant.PORTRAIT;
+  }
+
+  return GalleryFrameVariant.SQUARE;
+}
+
+export async function getGalleryImages(
+  limit: number,
+): Promise<GalleryImage[]> {
   if (limit <= 0) {
     return [];
   }
@@ -30,6 +50,8 @@ export async function getGalleryImageSources(limit: number) {
       origin: Origin.GALLERY,
     },
     select: {
+      width: true,
+      height: true,
       blob: {
         select: {
           bucket: true,
@@ -40,15 +62,23 @@ export async function getGalleryImageSources(limit: number) {
   });
 
   const supabase = createAdminClient();
-  const uniqueSources = Array.from(
-    new Set(
-      images.map(
-        ({ blob }) =>
-          supabase.storage.from(blob.bucket).getPublicUrl(blob.path).data
-            .publicUrl,
-      ),
-    ),
+  const uniqueImages = Array.from(
+    new Map(
+      images.map(({ blob, width, height }) => {
+        const src = supabase.storage
+          .from(blob.bucket)
+          .getPublicUrl(blob.path).data.publicUrl;
+
+        return [
+          src,
+          {
+            src,
+            frame: getFrameVariant(width, height),
+          } satisfies GalleryImage,
+        ];
+      }),
+    ).values(),
   );
 
-  return shuffle(uniqueSources).slice(0, limit);
+  return shuffle(uniqueImages).slice(0, limit);
 }

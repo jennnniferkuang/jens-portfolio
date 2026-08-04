@@ -1,4 +1,8 @@
-export type GalleryFrameVariant = 1 | 2 | 3;
+export enum GalleryFrameVariant {
+  SQUARE = "square",
+  PORTRAIT = "portrait",
+  LANDSCAPE = "landscape",
+}
 
 export type GalleryImage = {
   src: string;

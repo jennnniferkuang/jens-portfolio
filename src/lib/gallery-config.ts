@@ -15,14 +15,14 @@ const EDGE_ZONES: NormalizedRect[] = [
 export const GALLERY_ROOM_SETTINGS: GalleryRoomSettings[] = [
   {
     id: "welcome",
-    count: 4,
+    count: 7,
     preferredWidth: 16,
     minWidth: 9,
     allowedZones: EDGE_ZONES,
   },
   {
     id: "about",
-    count: 3,
+    count: 4,
     preferredWidth: 14,
     minWidth: 8,
     allowedZones: EDGE_ZONES,

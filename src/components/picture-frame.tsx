@@ -2,13 +2,7 @@
 
 import Image from "next/image";
 
-import type { GalleryFrameVariant } from "@/lib/gallery-placement";
-
-/* Frame sizes:
-1 -> 1x1 white
-2 -> 2x3 white
-3 -> 3x2 white (2x3 rotated)
-*/
+import { GalleryFrameVariant } from "@/lib/gallery-placement";
 
 type PictureFrameProps = {
     imgSrc?: string;
@@ -21,30 +15,29 @@ type PictureFrameProps = {
 // Position and width parameters are pixels within the nearest gallery canvas.
 export default function PictureFrame({
     imgSrc = "/stationary.webp",
-    frame = 1,
+    frame = GalleryFrameVariant.SQUARE,
     width = 160,
     x = 0,
     y = 0,
 }: PictureFrameProps) {
-
     let frameSrc = "/frame1x1-white.webp";
     let pictureWidth = 60;
     let pictureHeight = 60;
     let frameRotation = "0deg";
 
     switch(frame) {
-        case(3): // 3x2
+        case GalleryFrameVariant.LANDSCAPE:
             frameSrc = "/frame2x3-white.webp";
             pictureWidth = 49;
             pictureHeight = 74;
             frameRotation = "90deg";
             break;
-        case (2): // 2x3
+        case GalleryFrameVariant.PORTRAIT:
             frameSrc = "/frame2x3-white.webp";
             pictureWidth = 74;
             pictureHeight = 49;
             break;
-        case (1): // 1x1
+        case GalleryFrameVariant.SQUARE:
         default:
             frameSrc = "/frame1x1-white.webp";
             break;
