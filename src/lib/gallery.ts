@@ -3,10 +3,7 @@ import "server-only";
 import { randomInt } from "node:crypto";
 
 import { Origin } from "@/generated/prisma/client";
-import {
-  GalleryFrameVariant,
-  type GalleryImage,
-} from "@/lib/gallery-placement";
+import type { GalleryImage } from "@/lib/gallery-placement";
 import { prisma } from "@/lib/prisma";
 import { createAdminClient } from "@/lib/supabase/admin";
 
@@ -22,20 +19,6 @@ function shuffle<T>(values: T[]) {
   }
 
   return shuffled;
-}
-
-function getFrameVariant(width: number, height: number): GalleryFrameVariant {
-  const aspectRatio = width / height;
-
-  if (aspectRatio > 1.2) {
-    return GalleryFrameVariant.LANDSCAPE;
-  }
-
-  if (aspectRatio < 0.8) {
-    return GalleryFrameVariant.PORTRAIT;
-  }
-
-  return GalleryFrameVariant.SQUARE;
 }
 
 export async function getGalleryImages(
@@ -73,7 +56,8 @@ export async function getGalleryImages(
           src,
           {
             src,
-            frame: getFrameVariant(width, height),
+            naturalWidth: width,
+            naturalHeight: height,
           } satisfies GalleryImage,
         ];
       }),

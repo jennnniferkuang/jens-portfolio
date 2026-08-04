@@ -6,7 +6,8 @@ export enum GalleryFrameVariant {
 
 export type GalleryImage = {
   src: string;
-  frame: GalleryFrameVariant;
+  naturalWidth: number;
+  naturalHeight: number;
 };
 
 export type NormalizedRect = {

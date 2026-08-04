@@ -117,7 +117,8 @@ export default function GalleryFrames({ config }: GalleryFramesProps) {
             <PictureFrame
               key={placement.id}
               imgSrc={placement.src}
-              frame={placement.frame}
+              imageWidth={placement.naturalWidth}
+              imageHeight={placement.naturalHeight}
               width={placement.width}
               x={placement.x}
               y={placement.y}

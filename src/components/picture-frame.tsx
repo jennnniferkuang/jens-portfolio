@@ -6,20 +6,41 @@ import { GalleryFrameVariant } from "@/lib/gallery-placement";
 
 type PictureFrameProps = {
     imgSrc?: string;
-    frame?: GalleryFrameVariant;
+    imageWidth?: number;
+    imageHeight?: number;
     width?: number;
     x?: number;
     y?: number;
 };
 
+function getFrameVariant(
+    imageWidth: number,
+    imageHeight: number,
+): GalleryFrameVariant {
+    const aspectRatio = imageWidth / imageHeight;
+    console.log(aspectRatio);
+
+    if (aspectRatio > 1.2) {
+        return GalleryFrameVariant.PORTRAIT;
+    }
+
+    if (aspectRatio < 0.8) {
+        return GalleryFrameVariant.LANDSCAPE;
+    }
+
+    return GalleryFrameVariant.SQUARE;
+}
+
 // Position and width parameters are pixels within the nearest gallery canvas.
 export default function PictureFrame({
     imgSrc = "/stationary.webp",
-    frame = GalleryFrameVariant.SQUARE,
+    imageWidth = 1,
+    imageHeight = 1,
     width = 160,
     x = 0,
     y = 0,
 }: PictureFrameProps) {
+    const frame = getFrameVariant(imageWidth, imageHeight);
     let frameSrc = "/frame1x1-white.webp";
     let pictureWidth = 60;
     let pictureHeight = 60;

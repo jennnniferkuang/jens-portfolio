@@ -1,6 +1,7 @@
 "use server";
 
 import { randomUUID } from "node:crypto";
+import { imageSize } from "image-size";
 import { redirect } from "next/navigation";
 import { Origin } from "@/generated/prisma/client";
 import { isSoleAdmin, requireAdmin } from "@/lib/auth/admin";
@@ -101,11 +102,20 @@ export async function uploadImage(origin: Origin, formData: FormData) {
     redirect("/admin?tab=gallery&error=image-too-large");
   }
 
+  const imageBytes = new Uint8Array(await file.arrayBuffer());
+  let dimensions: ReturnType<typeof imageSize>;
+
+  try {
+    dimensions = imageSize(imageBytes);
+  } catch {
+    redirect("/admin?tab=gallery&error=invalid-image");
+  }
+
   const path = `${origin.toLowerCase()}/${randomUUID()}-${safeFileName(file.name)}`;
   const supabase = await ensureMediaBucket();
   const { error: uploadError } = await supabase.storage
     .from(MEDIA_BUCKET)
-    .upload(path, new Uint8Array(await file.arrayBuffer()), {
+    .upload(path, imageBytes, {
       contentType: file.type,
       upsert: false,
     });
@@ -119,8 +129,8 @@ export async function uploadImage(origin: Origin, formData: FormData) {
     await prisma.image.create({
       data: {
         name: file.name,
-        width: 0,
-        height: 0,
+        width: dimensions.width,
+        height: dimensions.height,
         origin,
         blob: {
           create: {
