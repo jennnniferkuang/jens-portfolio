@@ -20,7 +20,7 @@ export default function Navbar() {
 			</Link>
 			<div className='hidden flex-row gap-4 md:flex'>
 				<Link className='navbar-text' href='/journal'>Journal</Link> 
-				{/* <Link className='navbar-text' href='/commissions'>Commissions</Link> */}
+				{/* <Link className='navbar-text' href='/payments'>Payments</Link> */}
 			</div>
 			<button
 				type='button'
@@ -38,7 +38,7 @@ export default function Navbar() {
 					className='absolute inset-x-0 top-full flex w-full flex-col bg-white p-2 shadow-lg md:hidden'
 				>
 					<Link className='px-3 py-2 text-black' href='/journal' onClick={closeMenu}>Journal</Link>
-					{/* <Link className='px-3 py-2 text-black' href='/commissions' onClick={closeMenu}>Commissions</Link> */}
+					{/* <Link className='px-3 py-2 text-black' href='/payments' onClick={closeMenu}>Payments</Link> */}
 				</div>
 			)}
 		</nav>
