@@ -53,7 +53,12 @@ const preloadImages = async urls => {
 
 const Masonry = ({
   items,
+  ease = 'power3.out',
+  duration = 0.6,
+  stagger = 0.05,
+  animateFrom = 'bottom',
   scaleOnHover = false,
+  hoverScale = 0.95,
   blurToFocus = false,
   colorShiftOnHover = false
 }) => {
@@ -109,7 +114,12 @@ const Masonry = ({
     return items.map(child => {
       const col = colHeights.indexOf(Math.min(...colHeights));
       const x = columnWidth * col;
-      const height = child.height / 2;
+      const hasImageDimensions = child.width > 0 && child.height > 0;
+      const height = hasImageDimensions
+        ? columnWidth * (child.height / child.width)
+        : child.height > 0
+          ? child.height / 2
+          : columnWidth;
       const y = colHeights[col];
 
       colHeights[col] += height;
@@ -117,6 +127,11 @@ const Masonry = ({
       return { ...child, x, y, w: columnWidth, h: height };
     });
   }, [columns, items, width]);
+
+  const gridHeight = useMemo(
+    () => grid.reduce((height, item) => Math.max(height, item.y + item.h), 0),
+    [grid]
+  );
 
   const hasMounted = useRef(false);
 
@@ -212,7 +227,11 @@ const Masonry = ({
   };
 
   return (
-    <div ref={containerRef} className="list">
+    <div
+      ref={containerRef}
+      className="list"
+      style={{ height: gridHeight ? `${gridHeight}px` : undefined }}
+    >
       {grid.map(item => {
         return (
           <div

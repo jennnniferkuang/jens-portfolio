@@ -1,4 +1,4 @@
-import HorizontalScrollGallery from '@/components/horizontal-scroll-gallery';
+import PortfolioScrollExperience from '@/components/portfolio-scroll-experience';
 import { TOTAL_GALLERY_PICTURES } from '@/lib/gallery-config';
 import { getGalleryImages } from '@/lib/gallery';
 
@@ -10,8 +10,6 @@ export default async function Home() {
   );
 
   return (
-    <div>
-      <HorizontalScrollGallery galleryImages={galleryImages} />
-    </div>
+    <PortfolioScrollExperience galleryImages={galleryImages} />
   );
 }

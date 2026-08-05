@@ -1,1 +1,0 @@
-export const SECTION_COUNT = 5;
