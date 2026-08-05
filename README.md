@@ -27,9 +27,9 @@ npx prisma generate
 
 ## Art market payments
 The `/payments` page creates one-time Stripe Checkout Sessions using
-`STRIPE_SECRET_KEY`. The online payment charge defaults to 2% and can be
+`STRIPE_SECRET_KEY`. The online payment charge defaults to 3% and can be
 configured with hardcoded constants in `market-payments.ts`.
-`feeRateBps` uses basis points, so `200` means 2%. Amounts
+`feeRateBps` uses basis points, so `300` means 3%. Amounts
 ending in `Cents` use Canadian cents.
 
 # Bug backlog
