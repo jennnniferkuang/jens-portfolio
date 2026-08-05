@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
-import { Forum, Almendra } from "next/font/google";
+import { Forum, Almendra, Geist } from "next/font/google";
 import "./globals.css";
 import Navbar from '@/components/navbar';
+import { cn } from "@/lib/utils";
+
+const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
 const body = Forum({
   weight: '400',
@@ -27,7 +30,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className={cn("font-sans", geist.variable)}>
       <body className={`${body.className} antialiased`}>
         <Navbar/>
         {children}

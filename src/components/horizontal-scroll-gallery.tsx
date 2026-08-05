@@ -1,21 +1,61 @@
 'use client';
 
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useMemo } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 import { Button } from 'flowbite-react';
 import { SECTION_COUNT } from '@/config';
 import Image from 'next/image';
+import GalleryFrames from '@/components/gallery-frames';
+import { GALLERY_ROOM_SETTINGS } from '@/lib/gallery-config';
+import type { GalleryImage, GalleryRoomConfig } from '@/lib/gallery-placement';
 
 gsap.registerPlugin(ScrollTrigger);
 ScrollTrigger.config({ ignoreMobileResize: true });
 
 gsap.registerPlugin(ScrollTrigger);
 
-export default function HorizontalScrollGallery() {
+type HorizontalScrollGalleryProps = {
+    galleryImages: GalleryImage[];
+};
+
+const RENDER_GALLERY_FRAMES = false;
+
+function distributeImagesAcrossRooms(
+    galleryImages: GalleryImage[],
+): GalleryRoomConfig[] {
+    const rooms = GALLERY_ROOM_SETTINGS.map((room) => ({
+        ...room,
+        images: [],
+    })) as GalleryRoomConfig[];
+    let sourceIndex = 0;
+
+    for (const room of rooms) {
+        if (sourceIndex >= galleryImages.length) {
+            break;
+        }
+
+        const roomEnd = Math.min(
+            sourceIndex + room.count,
+            galleryImages.length,
+        );
+        room.images.push(...galleryImages.slice(sourceIndex, roomEnd));
+        sourceIndex = roomEnd;
+    }
+
+    return rooms;
+}
+
+export default function HorizontalScrollGallery({
+    galleryImages,
+}: HorizontalScrollGalleryProps) {
     const sectionRef = useRef<HTMLDivElement | null>(null);
     const triggerRef = useRef<HTMLDivElement | null>(null);
     const spriteRef = useRef<HTMLImageElement | null>(null);
+    const galleryRooms = useMemo(
+        () => distributeImagesAcrossRooms(galleryImages),
+        [galleryImages],
+    );
 
     useEffect(() => {
         if (!sectionRef.current || !triggerRef.current) return;
@@ -125,62 +165,32 @@ export default function HorizontalScrollGallery() {
                 <div className='scroll-section-inner relative' ref={sectionRef} style={{ width: `${SECTION_COUNT * 100 }vw`}}>
                     <div className='scroll-section'>
                         <div className="gallery-canvas">
-                            <div className="flex flex-col gap-2">
-                                <p style={{ fontSize: 'calc(100px * var(--font-scale))', textAlign: 'center' }}>Hi! I’m Jen!</p>
-                                <p style={{ textAlign: 'center', fontSize: 'calc(20px * var(--font-scale))' }}>scroll down to explore the exhibit</p>
-                            </div>
-                            <div className="first-page-photo-gallery">
-                                {/* <PictureFrame
-                                    imgSrc='/me.png'
-                                    frame={1}
-                                    xPos={15}
-                                    yPos={20}
-                                    width={15}/>
-                                <PictureFrame
-                                    imgSrc='/dog.jpg'
-                                    frame={2}
-                                    xPos={45}
-                                    yPos={25}
-                                    width={25}/>
-                                <PictureFrame
-                                    imgSrc='/concert.jpg'
-                                    frame={3}
-                                    xPos={82}
-                                    yPos={25}
-                                    width={20}/>
-                                <PictureFrame
-                                    imgSrc='/burlington.jpg'
-                                    frame={1}
-                                    xPos={70}
-                                    yPos={65}
-                                    width={15}/>
-                                <PictureFrame
-                                    imgSrc='/comp-sci-museum.jpg'
-                                    frame={1}
-                                    xPos={20}
-                                    yPos={55}
-                                    width={20}/> */}
+                            {RENDER_GALLERY_FRAMES ? <GalleryFrames config={galleryRooms[0]} /> : null}
+                            <div className="gallery-room-content flex flex-col gap-2" data-gallery-obstacle>
+                                <p style={{ fontSize: 'calc(100px * var(--font-scale, 1))', textAlign: 'center' }}>Hi! I’m Jen!</p>
+                                <p style={{ textAlign: 'center', fontSize: 'calc(20px * var(--font-scale, 1))' }}>scroll down to explore the exhibit</p>
                             </div>
                         </div>
                     </div>
                     <div className='scroll-section'>
                         <div className="gallery-canvas">
-                            <div className='flex flex-col gap-3 p-6' style={{ justifyItems: 'center' }}>
-                                <p style={{ textAlign: 'start', fontSize: 'calc(25px * var(--font-scale))' }}>About Me:</p>
+                            {RENDER_GALLERY_FRAMES ? <GalleryFrames config={galleryRooms[1]} /> : null}
+                            <div className='gallery-room-content flex flex-col gap-3 p-6' data-gallery-obstacle style={{ justifyItems: 'center' }}>
+                                <p style={{ textAlign: 'start', fontSize: 'calc(25px * var(--font-scale, 1))' }}>About Me:</p>
                                 <ul>
-                                    <li style={{ textAlign: 'start', fontSize: 'calc(20px * var(--font-scale))' }}>
+                                    <li style={{ textAlign: 'start', fontSize: 'calc(20px * var(--font-scale, 1))' }}>
                                         I’m a 2nd year software engineering student at the University of Waterloo
                                     </li>
-                                    <li style={{ textAlign: 'start', fontSize: 'calc(20px * var(--font-scale))' }}>
+                                    <li style={{ textAlign: 'start', fontSize: 'calc(20px * var(--font-scale, 1))' }}>
                                         I’m currently on a gap year working as a founding engineer at a startup called Otto-SR
                                     </li>
-                                    <li style={{ textAlign: 'start', fontSize: 'calc(20px * var(--font-scale))' }}>
+                                    <li style={{ textAlign: 'start', fontSize: 'calc(20px * var(--font-scale, 1))' }}>
                                         I luv making/playing video games
                                     </li>
-                                    <li style={{ textAlign: 'start', fontSize: 'calc(20px * var(--font-scale))' }}>
+                                    <li style={{ textAlign: 'start', fontSize: 'calc(20px * var(--font-scale, 1))' }}>
                                         I luv skiing and biking and adventuring
                                     </li>
-                                    <li style={{ textAlign: 'start', fontSize: 'calc(20px * var(--font-scale))' }}>
+                                    <li style={{ textAlign: 'start', fontSize: 'calc(20px * var(--font-scale, 1))' }}>
                                         I do art and I love crafting (making a sister art site soon!)
                                     </li>
                                 </ul>
@@ -189,10 +199,11 @@ export default function HorizontalScrollGallery() {
                     </div>
                     <div className='scroll-section'>
                         <div className="gallery-canvas">
-                            <div className='flex md:flex-row flex-col gap-4'>
+                            {RENDER_GALLERY_FRAMES ? <GalleryFrames config={galleryRooms[2]} /> : null}
+                            <div className='gallery-room-content flex flex-col gap-4 md:flex-row' data-gallery-obstacle>
                                 <div className='flex flex-col sm:flex-row gap-3'>
                                     <div className='flex flex-col gap-3'>
-                                        <p style={{ textAlign: 'center', fontSize: 'calc(30px * var(--font-scale))' }}>My favourite songs :P</p>
+                                        <p style={{ textAlign: 'center', fontSize: 'calc(30px * var(--font-scale, 1))' }}>My favourite songs :P</p>
                                         <iframe data-testid="embed-iframe"
                                             className="spotify-embed"
                                             src="https://open.spotify.com/embed/playlist/4BysGnIA94cTXlFrhoXGen?utm_source=generator"
@@ -203,7 +214,7 @@ export default function HorizontalScrollGallery() {
                                         </iframe>
                                     </div>
                                     <div className='flex flex-col gap-3'>
-                                        <p style={{ textAlign: 'center', fontSize: 'calc(30px * var(--font-scale))' }}>Losercore Computer Playlist</p>
+                                        <p style={{ textAlign: 'center', fontSize: 'calc(30px * var(--font-scale, 1))' }}>Losercore Computer Playlist</p>
                                         <iframe data-testid="embed-iframe"
                                             className="spotify-embed"
                                             src="https://open.spotify.com/embed/playlist/7JNWAdUP3DNIM3vpctdw93?utm_source=generator"
@@ -219,9 +230,10 @@ export default function HorizontalScrollGallery() {
                     </div>
                     <div className='scroll-section'>
                         <div className="gallery-canvas">
-                            <div className='flex flex-col gap-3 p-6' style={{ justifyItems: 'center', alignItems: 'center' }}>
-                                <p style={{ textAlign: 'center', fontSize: 'calc(50px * var(--font-scale))' }}>Fun Fact!</p>
-                                <p style={{ textAlign: 'center', fontSize: 'calc(25px * var(--font-scale))' }}>This site is a tribute to my first EVER game called Out of Sight, a 2D horror platformer which is a totally dookie piece of code, but it still means a lot to me to this day! You can check it out here:</p>
+                            {RENDER_GALLERY_FRAMES ? <GalleryFrames config={galleryRooms[3]} /> : null}
+                            <div className='gallery-room-content flex flex-col gap-3 p-6' data-gallery-obstacle style={{ justifyItems: 'center', alignItems: 'center' }}>
+                                <p style={{ textAlign: 'center', fontSize: 'calc(50px * var(--font-scale, 1))' }}>Fun Fact!</p>
+                                <p style={{ textAlign: 'center', fontSize: 'calc(25px * var(--font-scale, 1))' }}>This site is a tribute to my first EVER game called Out of Sight, a 2D horror platformer which is a totally dookie piece of code, but it still means a lot to me to this day! You can check it out here:</p>
                                 <div className='flex flex-row gap-4'>
                                 <Button as="a" color='dark' href="https://youtu.be/wUkGteWnN54" target="_blank">Demo</Button>
                                 <Button as="a" color='dark' href="https://github.com/jennnniferkuang/Out-of-Sight" target="_blank">Repo</Button>
@@ -231,15 +243,16 @@ export default function HorizontalScrollGallery() {
                     </div>
                     <div className='scroll-section'>
                         <div className="gallery-canvas">
-                            <div className='flex flex-col gap-3 p-6' style={{ justifyItems: 'center', alignItems: 'center' }}>
-                                <p style={{ textAlign: 'center', fontSize: 'calc(30px * var(--font-scale))' }}>This site is still under construction!</p>
-                                <p style={{ textAlign: 'center', fontSize: 'calc(25px * var(--font-scale))' }}>More exciting things to come, but for now, learn more about me by checking out my:</p>
+                            {RENDER_GALLERY_FRAMES ? <GalleryFrames config={galleryRooms[4]} /> : null}
+                            <div className='gallery-room-content flex flex-col gap-3 p-6' data-gallery-obstacle style={{ justifyItems: 'center', alignItems: 'center' }}>
+                                <p style={{ textAlign: 'center', fontSize: 'calc(30px * var(--font-scale, 1))' }}>This site is still under construction!</p>
+                                <p style={{ textAlign: 'center', fontSize: 'calc(25px * var(--font-scale, 1))' }}>More exciting things to come, but for now, learn more about me by checking out my:</p>
                                 <div className='flex flex-row gap-4'>
                                 <Button as="a" color='dark' href="https://github.com/jennnniferkuang" target="_blank">GitHub</Button>
                                 <Button as="a" color='dark' href="https://devpost.com/jennnniferkuang?ref_content=user-portfolio&ref_feature=portfolio&ref_medium=global-nav&_gl=1*1qqzdkq*_gcl_au*Mjc1NTk4NDEuMTc0ODQzNjExMw..*_ga*MTg2NjAyNTM0OC4xNzQ4NDM2MTEz*_ga_0YHJK3Y10M*czE3NTU1Mzc4MDIkbzEyJGcxJHQxNzU1NTM3ODA3JGo1NSRsMCRoMA" target="_blank">Devpost</Button>
                                 <Button as="a" color='dark' href="https://drive.google.com/file/d/1XUg5-LMHmn9yxra0V4K48jUq0PasT_Gj/view?usp=drive_link" target="_blank">Resume!</Button>
                                 </div>
-                                <p style={{ textAlign: 'center', fontSize: 'calc(30px * var(--font-scale))' }}>Other fun places to get to know me:</p>
+                                <p style={{ textAlign: 'center', fontSize: 'calc(30px * var(--font-scale, 1))' }}>Other fun places to get to know me:</p>
                                 <div className='flex flex-row gap-4'>
                                 <Button as="a" color='dark' href="https://steamcommunity.com/id/cornflaekes/" target="_blank">Steam</Button>
                                 <Button as="a" color='dark' href="https://open.spotify.com/user/31vscmisfq4qozqjnpr35sdab4qe?si=c3ff83da36ec4390" target="_blank">Spotify</Button>
