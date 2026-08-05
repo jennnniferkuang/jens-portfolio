@@ -19,6 +19,8 @@ type HorizontalScrollGalleryProps = {
     galleryImages: GalleryImage[];
 };
 
+const RENDER_GALLERY_FRAMES = false;
+
 function distributeImagesAcrossRooms(
     galleryImages: GalleryImage[],
 ): GalleryRoomConfig[] {
@@ -163,7 +165,7 @@ export default function HorizontalScrollGallery({
                 <div className='scroll-section-inner relative' ref={sectionRef} style={{ width: `${SECTION_COUNT * 100 }vw`}}>
                     <div className='scroll-section'>
                         <div className="gallery-canvas">
-                            <GalleryFrames config={galleryRooms[0]} />
+                            {RENDER_GALLERY_FRAMES ? <GalleryFrames config={galleryRooms[0]} /> : null}
                             <div className="gallery-room-content flex flex-col gap-2" data-gallery-obstacle>
                                 <p style={{ fontSize: 'calc(100px * var(--font-scale, 1))', textAlign: 'center' }}>Hi! I’m Jen!</p>
                                 <p style={{ textAlign: 'center', fontSize: 'calc(20px * var(--font-scale, 1))' }}>scroll down to explore the exhibit</p>
@@ -172,7 +174,7 @@ export default function HorizontalScrollGallery({
                     </div>
                     <div className='scroll-section'>
                         <div className="gallery-canvas">
-                            <GalleryFrames config={galleryRooms[1]} />
+                            {RENDER_GALLERY_FRAMES ? <GalleryFrames config={galleryRooms[1]} /> : null}
                             <div className='gallery-room-content flex flex-col gap-3 p-6' data-gallery-obstacle style={{ justifyItems: 'center' }}>
                                 <p style={{ textAlign: 'start', fontSize: 'calc(25px * var(--font-scale, 1))' }}>About Me:</p>
                                 <ul>
@@ -197,7 +199,7 @@ export default function HorizontalScrollGallery({
                     </div>
                     <div className='scroll-section'>
                         <div className="gallery-canvas">
-                            <GalleryFrames config={galleryRooms[2]} />
+                            {RENDER_GALLERY_FRAMES ? <GalleryFrames config={galleryRooms[2]} /> : null}
                             <div className='gallery-room-content flex flex-col gap-4 md:flex-row' data-gallery-obstacle>
                                 <div className='flex flex-col sm:flex-row gap-3'>
                                     <div className='flex flex-col gap-3'>
@@ -228,7 +230,7 @@ export default function HorizontalScrollGallery({
                     </div>
                     <div className='scroll-section'>
                         <div className="gallery-canvas">
-                            <GalleryFrames config={galleryRooms[3]} />
+                            {RENDER_GALLERY_FRAMES ? <GalleryFrames config={galleryRooms[3]} /> : null}
                             <div className='gallery-room-content flex flex-col gap-3 p-6' data-gallery-obstacle style={{ justifyItems: 'center', alignItems: 'center' }}>
                                 <p style={{ textAlign: 'center', fontSize: 'calc(50px * var(--font-scale, 1))' }}>Fun Fact!</p>
                                 <p style={{ textAlign: 'center', fontSize: 'calc(25px * var(--font-scale, 1))' }}>This site is a tribute to my first EVER game called Out of Sight, a 2D horror platformer which is a totally dookie piece of code, but it still means a lot to me to this day! You can check it out here:</p>
@@ -241,7 +243,7 @@ export default function HorizontalScrollGallery({
                     </div>
                     <div className='scroll-section'>
                         <div className="gallery-canvas">
-                            <GalleryFrames config={galleryRooms[4]} />
+                            {RENDER_GALLERY_FRAMES ? <GalleryFrames config={galleryRooms[4]} /> : null}
                             <div className='gallery-room-content flex flex-col gap-3 p-6' data-gallery-obstacle style={{ justifyItems: 'center', alignItems: 'center' }}>
                                 <p style={{ textAlign: 'center', fontSize: 'calc(30px * var(--font-scale, 1))' }}>This site is still under construction!</p>
                                 <p style={{ textAlign: 'center', fontSize: 'calc(25px * var(--font-scale, 1))' }}>More exciting things to come, but for now, learn more about me by checking out my:</p>
