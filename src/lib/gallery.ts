@@ -32,9 +32,7 @@ export async function getGalleryImages(
     where: {
       origin: Origin.GALLERY,
     },
-    select: {
-      width: true,
-      height: true,
+    include: {
       blob: {
         select: {
           bucket: true,
@@ -47,17 +45,16 @@ export async function getGalleryImages(
   const supabase = createAdminClient();
   const uniqueImages = Array.from(
     new Map(
-      images.map(({ blob, width, height }) => {
+      images.map(({ blob, ...image }) => {
         const src = supabase.storage
           .from(blob.bucket)
           .getPublicUrl(blob.path).data.publicUrl;
 
         return [
-          src,
+          image.id,
           {
             src,
-            naturalWidth: width,
-            naturalHeight: height,
+            image,
           } satisfies GalleryImage,
         ];
       }),

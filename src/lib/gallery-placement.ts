@@ -1,3 +1,5 @@
+import type { ImageModel } from "@/models";
+
 export enum GalleryFrameVariant {
   SQUARE = "square",
   PORTRAIT = "portrait",
@@ -6,8 +8,7 @@ export enum GalleryFrameVariant {
 
 export type GalleryImage = {
   src: string;
-  naturalWidth: number;
-  naturalHeight: number;
+  image: ImageModel;
 };
 
 export type NormalizedRect = {
@@ -37,7 +38,7 @@ export type PlacedGalleryFrame = GalleryImage & {
   id: string;
   x: number;
   y: number;
-  width: number;
+  frameWidth: number;
 };
 
 type PlacementOptions = {
@@ -53,6 +54,26 @@ const FRAME_GAP = 16;
 const CANVAS_INSET = 12;
 const MAX_LOCATION_ATTEMPTS = 120;
 const SHRINK_FACTOR = 0.9;
+
+export function getGalleryFrameVariant(
+  image: ImageModel,
+): GalleryFrameVariant {
+  if (image.width <= 0 || image.height <= 0) {
+    return GalleryFrameVariant.SQUARE;
+  }
+
+  const aspectRatio = image.width / image.height;
+
+  if (aspectRatio > 1.2) {
+    return GalleryFrameVariant.LANDSCAPE;
+  }
+
+  if (aspectRatio < 0.8) {
+    return GalleryFrameVariant.PORTRAIT;
+  }
+
+  return GalleryFrameVariant.SQUARE;
+}
 
 function hashString(value: string) {
   let hash = 2166136261;
@@ -216,8 +237,8 @@ export function placeGalleryFrames(
         random,
       );
 
-      for (const width of candidateSizes) {
-        const halfWidth = width / 2;
+      for (const frameWidth of candidateSizes) {
+        const halfWidth = frameWidth / 2;
         const rect = {
           left: center.x - halfWidth,
           top: center.y - halfWidth,
@@ -242,7 +263,7 @@ export function placeGalleryFrames(
             id: `${config.id}-${frameIndex}`,
             x: center.x,
             y: center.y,
-            width,
+            frameWidth,
           };
           placedRects.push(rect);
           break;

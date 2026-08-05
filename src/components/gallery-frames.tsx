@@ -116,10 +116,9 @@ export default function GalleryFrames({ config }: GalleryFramesProps) {
         ? placements.map((placement) => (
             <PictureFrame
               key={placement.id}
+              image={placement.image}
               imgSrc={placement.src}
-              imageWidth={placement.naturalWidth}
-              imageHeight={placement.naturalHeight}
-              width={placement.width}
+              frameWidth={placement.frameWidth}
               x={placement.x}
               y={placement.y}
             />

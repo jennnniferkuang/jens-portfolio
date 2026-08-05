@@ -2,45 +2,29 @@
 
 import Image from "next/image";
 
-import { GalleryFrameVariant } from "@/lib/gallery-placement";
+import {
+    GalleryFrameVariant,
+    getGalleryFrameVariant,
+} from "@/lib/gallery-placement";
+import type { ImageModel } from "@/models";
 
 type PictureFrameProps = {
-    imgSrc?: string;
-    imageWidth?: number;
-    imageHeight?: number;
-    width?: number;
-    x?: number;
-    y?: number;
+    image: ImageModel;
+    imgSrc: string;
+    frameWidth: number;
+    x: number;
+    y: number;
 };
 
-function getFrameVariant(
-    imageWidth: number,
-    imageHeight: number,
-): GalleryFrameVariant {
-    const aspectRatio = imageWidth / imageHeight;
-    console.log(aspectRatio);
-
-    if (aspectRatio > 1.2) {
-        return GalleryFrameVariant.PORTRAIT;
-    }
-
-    if (aspectRatio < 0.8) {
-        return GalleryFrameVariant.LANDSCAPE;
-    }
-
-    return GalleryFrameVariant.SQUARE;
-}
-
-// Position and width parameters are pixels within the nearest gallery canvas.
+// Position and frame width are pixels within the nearest gallery canvas.
 export default function PictureFrame({
-    imgSrc = "/stationary.webp",
-    imageWidth = 1,
-    imageHeight = 1,
-    width = 160,
-    x = 0,
-    y = 0,
+    image,
+    imgSrc,
+    frameWidth,
+    x,
+    y,
 }: PictureFrameProps) {
-    const frame = getFrameVariant(imageWidth, imageHeight);
+    const frame = getGalleryFrameVariant(image);
     let frameSrc = "/frame1x1-white.webp";
     let pictureWidth = 60;
     let pictureHeight = 60;
@@ -49,14 +33,14 @@ export default function PictureFrame({
     switch(frame) {
         case GalleryFrameVariant.LANDSCAPE:
             frameSrc = "/frame2x3-white.webp";
-            pictureWidth = 49;
-            pictureHeight = 74;
-            frameRotation = "90deg";
+            pictureWidth = 74;
+            pictureHeight = 49;
             break;
         case GalleryFrameVariant.PORTRAIT:
             frameSrc = "/frame2x3-white.webp";
-            pictureWidth = 74;
-            pictureHeight = 49;
+            pictureWidth = 49;
+            pictureHeight = 74;
+            frameRotation = "90deg";
             break;
         case GalleryFrameVariant.SQUARE:
         default:
@@ -71,7 +55,7 @@ export default function PictureFrame({
             style={{
                 top: `${y}px`,
                 left: `${x}px`,
-                width: `${width}px`,
+                width: `${frameWidth}px`,
                 transform: "translate(-50%, -50%)",
             }}>
 
@@ -83,7 +67,7 @@ export default function PictureFrame({
                 alt=""
                 width={769}
                 height={769}
-                sizes={`${Math.ceil(width)}px`}
+                sizes={`${Math.ceil(frameWidth)}px`}
             />
 
             {/* Inner picture */}
@@ -94,10 +78,10 @@ export default function PictureFrame({
                     width: `${pictureWidth}%`,
                     height: `${pictureHeight}%`,
                 }}
-                alt=""
-                width={769}
-                height={769}
-                sizes={`${Math.ceil(width)}px`}
+                alt={image.alt_text ?? ""}
+                width={image.width}
+                height={image.height}
+                sizes={`${Math.ceil(frameWidth)}px`}
             />
         </div>
     );
